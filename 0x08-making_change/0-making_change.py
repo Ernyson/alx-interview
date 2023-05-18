@@ -23,7 +23,6 @@ def makeChange(coins, total):
         for i in range(coin, total + 1):
             if f_coins[i - coin] + 1 < f_coins[i]:
                 f_coins[i] = f_coins[i - coin] + 1
-        #     f_coins[i] = min(f_coins[i], 1 + f_coins[i - coin])
 
     if f_coins[total] > total:
         return -1
