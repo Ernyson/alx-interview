@@ -1,34 +1,38 @@
 #!/usr/bin/python3
-"""Prime Game
+"""
+Prime Game
 """
 
 
-def isWinner(x, nums):
-    """Determines the winner
+def primeNumbers(n):
     """
-    if x < 1 or not nums:
+    Get all prime numbers
+    """
+    primeNos = []
+    filterd = [True] * (n + 1)
+    for prime in range(2, n + 1):
+        if (filterd[prime]):
+            primeNos.append(prime)
+            for i in range(prime, n + 1, prime):
+                filterd[i] = False
+    return primeNos
+
+
+def isWinner(x, nums):
+    """
+    Determines the winner of a prime game session
+    """
+    if x is None or nums is None or x == 0 or nums == []:
         return None
-
-    marias_wins = 0
-    bens_wins = 0
-
-    #Now generate primes with a limit of the maximum number in nums
-    n = max(nums)
-    primes = [True] * (n + 1)
-    primes[0] = primes[1] = False
-
-    for i in range(2, int(n**0.5) + 1):
-        if primes[i]:
-            for j in range(i**2, n + 1, i):
-                primes[j] = False
-
-    # count number of primes less than n in nums
-    for n in nums:
-        primes_count = sum(primes[2:n+1])
-        bens_wins += primes_count % 2 == 0
-        marias_wins += primes_count % 2 == 1
-
-    if marias_wins == bens_wins:
-        return None
-
-    return 'Maria' if marias_wins > bens_wins else 'Ben'
+    Maria = Ben = 0
+    for i in range(x):
+        primeNos = primeNumbers(nums[i])
+        if len(primeNos) % 2 == 0:
+            Ben += 1
+        else:
+            Maria += 1
+    if Maria > Ben:
+        return 'Maria'
+    elif Ben > Maria:
+        return 'Ben'
+    return None
